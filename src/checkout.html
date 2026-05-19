@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — OfficeFlow</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">OfficeFlow</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="checkout-layout">
+      <div>
+        <header class="checkout-header">
+          <h1>Checkout</h1>
+          <p>Complete your order below. You'll receive instant access by email.</p>
+        </header>
+
+        <div id="payment-error" class="error-banner" role="alert" aria-live="polite">
+          <span class="error-banner-icon">!</span>
+          <div class="error-banner-text">
+            <strong>Payment temporarily unavailable</strong>
+            <p id="payment-error-detail">
+              Our payment provider is experiencing a brief outage. You have not
+              been charged. Please try again in a few minutes — we're working to
+              restore service as quickly as possible.
+            </p>
+          </div>
+        </div>
+
+        <form id="checkout-form" class="form-card" novalidate>
+          <p class="form-section-title">Contact</p>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required autocomplete="email">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="first-name">First name</label>
+              <input type="text" id="first-name" name="firstName" placeholder="Jane" required autocomplete="given-name">
+            </div>
+            <div class="form-group">
+              <label for="last-name">Last name</label>
+              <input type="text" id="last-name" name="lastName" placeholder="Smith" required autocomplete="family-name">
+            </div>
+          </div>
+
+          <p class="form-section-title" style="margin-top: 32px;">Billing address</p>
+          <div class="form-group">
+            <label for="company">Company <span class="label-optional">(optional)</span></label>
+            <input type="text" id="company" name="company" placeholder="Acme GmbH" autocomplete="organization">
+          </div>
+          <div class="form-group">
+            <label for="address">Street address</label>
+            <input type="text" id="address" name="address" placeholder="Musterstraße 1" required autocomplete="street-address">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="postal">Postal code</label>
+              <input type="text" id="postal" name="postal" placeholder="10115" required autocomplete="postal-code">
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" placeholder="Berlin" required autocomplete="address-level2">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="country">Country</label>
+            <select id="country" name="country" required autocomplete="country-name">
+              <option value="">Select country</option>
+              <option value="DE" selected>Germany</option>
+              <option value="AT">Austria</option>
+              <option value="CH">Switzerland</option>
+              <option value="NL">Netherlands</option>
+              <option value="FR">France</option>
+              <option value="GB">United Kingdom</option>
+              <option value="US">United States</option>
+              <option value="OTHER">Other</option>
+            </select>
+          </div>
+
+          <p class="form-section-title form-section-title--spaced">Payment method</p>
+          <div class="payment-methods" role="radiogroup" aria-label="Payment method">
+            <label class="payment-method">
+              <input type="radio" name="paymentMethod" value="card" checked>
+              <span class="payment-method-box">
+                <span class="payment-method-icon payment-method-icon--card" aria-hidden="true"></span>
+                <span class="payment-method-text">
+                  <span class="payment-method-name">Card</span>
+                  <span class="payment-method-hint">Visa, Mastercard, Amex</span>
+                </span>
+              </span>
+            </label>
+            <label class="payment-method">
+              <input type="radio" name="paymentMethod" value="alipay">
+              <span class="payment-method-box">
+                <span class="payment-method-icon payment-method-icon--alipay" aria-hidden="true">支</span>
+                <span class="payment-method-text">
+                  <span class="payment-method-name">Alipay</span>
+                  <span class="payment-method-hint">Pay with your Alipay account</span>
+                </span>
+              </span>
+            </label>
+            <label class="payment-method">
+              <input type="radio" name="paymentMethod" value="wechat">
+              <span class="payment-method-box">
+                <span class="payment-method-icon payment-method-icon--wechat" aria-hidden="true"></span>
+                <span class="payment-method-text">
+                  <span class="payment-method-name">WeChat Pay</span>
+                  <span class="payment-method-hint">Scan or pay in WeChat</span>
+                </span>
+              </span>
+            </label>
+          </div>
+
+          <div id="payment-panel-card" class="payment-panel">
+            <div class="form-group">
+              <label for="card-name">Name on card</label>
+              <input type="text" id="card-name" name="cardName" placeholder="Jane Smith" autocomplete="cc-name">
+            </div>
+            <div class="form-group">
+              <label for="card-number">Card number</label>
+              <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" inputmode="numeric" autocomplete="cc-number">
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="expiry">Expiry</label>
+                <input type="text" id="expiry" name="expiry" placeholder="MM / YY" autocomplete="cc-exp">
+              </div>
+              <div class="form-group">
+                <label for="cvc">CVC</label>
+                <input type="text" id="cvc" name="cvc" placeholder="123" inputmode="numeric" autocomplete="cc-csc">
+              </div>
+            </div>
+          </div>
+
+          <div id="payment-panel-alipay" class="payment-panel payment-panel--hidden" hidden>
+            <div class="wallet-notice">
+              <p class="wallet-notice-title">Pay with Alipay</p>
+              <p class="wallet-notice-desc">
+                After you confirm, you'll open Alipay to complete payment securely.
+                Make sure the Alipay app is installed on your device.
+              </p>
+              <div class="wallet-qr-placeholder" aria-hidden="true">
+                <span class="wallet-qr-pattern"></span>
+                <span class="wallet-qr-label">QR code loads at checkout</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="payment-panel-wechat" class="payment-panel payment-panel--hidden" hidden>
+            <div class="wallet-notice">
+              <p class="wallet-notice-title">Pay with WeChat Pay</p>
+              <p class="wallet-notice-desc">
+                After you confirm, scan the QR code in WeChat or approve the payment
+                in the WeChat app on your phone.
+              </p>
+              <div class="wallet-qr-placeholder wallet-qr-placeholder--wechat" aria-hidden="true">
+                <span class="wallet-qr-pattern"></span>
+                <span class="wallet-qr-label">QR code loads at checkout</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block pay-submit" id="pay-btn">
+            Pay now
+          </button>
+        </form>
+      </div>
+
+      <aside class="order-summary">
+        <h2>Order summary</h2>
+        <p class="summary-product" id="summary-product">Microsoft 365 Complete</p>
+        <div class="summary-line summary-line--method">
+          <span>Payment</span>
+          <span id="summary-method">Card</span>
+        </div>
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <span id="summary-subtotal">€70.00</span>
+        </div>
+        <div class="summary-line">
+          <span>VAT (19%)</span>
+          <span id="summary-vat">€13.30</span>
+        </div>
+        <div class="summary-line total">
+          <span>Total</span>
+          <span id="summary-total">€83.30</span>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>&copy; 2026 OfficeFlow. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
